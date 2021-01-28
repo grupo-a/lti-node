@@ -2,7 +2,7 @@
   "name": "lti-node",
   "version": "1.0.0",
   "description": "LTI integration",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "nyc --reporter=html mocha -t 10000 --exit"
   },
