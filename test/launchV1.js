@@ -51,13 +51,13 @@ describe('Launch LTI 1.1 Signature', () => {
   const signature = launchV1.buildSignature(url, launchData, consumerKey, secretKey);
 
   it('Should return correct signature', () => {
-    chai.assert.equal(signature, 'MvACSKEAEY6KRHMVuzpO/t0uktI=');
+    chai.assert.equal(signature, 'HrG7xVZ7Dp2FNw0+MDEVqSuDlh8=');
   });
 
   const launchFormData = launchV1.buildForm(url, launchData, consumerKey, secretKey);
 
   it('Should return correct signature in launch form data', () => {
-    chai.assert.equal(launchFormData.properties.oauth_signature, 'MvACSKEAEY6KRHMVuzpO/t0uktI=');
+    chai.assert.equal(launchFormData.properties.oauth_signature, 'HrG7xVZ7Dp2FNw0+MDEVqSuDlh8=');
   });
 
   it('Should return correct url in launch form data', () => {
