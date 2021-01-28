@@ -1,0 +1,23 @@
+{
+  "name": "lti-node",
+  "version": "1.0.0",
+  "description": "LTI integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc --reporter=html mocha -t 10000 --exit"
+  },
+  "author": "grupoa.education",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "nonce": "^1.0.4",
+    "query-string": "^6.13.8"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.18.0",
+    "mocha": "^8.2.1",
+    "mocha-junit-reporter": "^2.0.0",
+    "nyc": "^15.1.0"
+  }
+}
