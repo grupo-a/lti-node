@@ -5,14 +5,13 @@ const encoding = (string) => {
   return encodeURIComponent(string).replace(/[!'()]/g, escape).replace(/\*/g, '%2A');
 };
   
-const createHash = (string, consumerSecret) => {  
+const createHash = (string, consumerSecret) => { 
   return crypto.createHmac('sha1', `${consumerSecret}&`).update(string).digest('base64');
 };
 
 const paramsToURL = (body) => {
   const bodyArray = [];
   const objectBody = { ...body };
-  
   for (const key in objectBody) {
     bodyArray.push(`${key}=${encoding(objectBody[key])}`);
   }
@@ -41,7 +40,7 @@ const build = (url, body, secret) => {
     params = queryString.parse(url.split('?')[1]);
   }
     
-  return buildSignatureRaw(url, method, body, params, secret);
+  return buildSignatureRaw(urlSplit[0], method, body, params, secret);
 };
 
 module.exports  = {
