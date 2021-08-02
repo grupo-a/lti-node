@@ -144,7 +144,7 @@ Return:
     }
 ```
 <br>
-<a name="launch_lti_v1"/>
+<a name="#outcome_service_lti_v1"/>
 
 # Outcome Service LTI 1.1
 
