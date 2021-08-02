@@ -20,6 +20,8 @@
    * [Launch LTI 1.1](#launch_lti_v1)
       * [Build Signature](#build_signature)
       * [Build Launch Form Data](#build_form_data)
+   * [Outcome Service LTI 1.1](#outcome_service_lti_v1)
+      * [Check signature](#check_signature)
    * [Status](#status)
 <!--te-->
 
@@ -139,6 +141,36 @@ Return:
             oauth_timestamp: 1611844954,
             oauth_signature: 'KomlyEQCWk/zy6Mljiunk0BhZug='
         }
+    }
+```
+<br>
+<a name="outcome_service_lti_v1"/>
+
+# Outcome Service LTI 1.1
+
+The Outcome Service LTI is implemented following the specification: https://www.imsglobal.org/spec/lti-bo/v1p1.
+
+<a name="check_signature"/>
+
+### Check Signature
+It's a function used to check if the oauth_signature field of the LTI protocol is valid.
+
+Example:
+``` javascript
+    const { outcomeV1 } = require('lti-node');
+
+    const url = 'https://grupoa.com.br.outcome';
+    const header = 'oauth_consumer_key=12345678, oauth_signature_method=HMAC-SHA1,oauth_timestamp=1627929009,oauth_nonce=d7d5d9a6278815d1c09f4e558b9a8272,oauth_version=1.0,oauth_signature=iHwxH4busDQpEAru0eWwwa2Mmdg%3D';
+    const consumerKey = '12345678';
+    const secretKey = 'secret';
+  
+    const signature = outcomeV1.checkSignature(url, header, body, secretKey);
+```
+Return:
+``` javascript
+    { 
+        resultScore: '10', 
+        sourcedId: 'abc' 
     }
 ```
 <br>

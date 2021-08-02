@@ -44,20 +44,20 @@ const launchDataSimpleRandom = {
 
 describe('Launch LTI 1.1 Signature', () => {
   
-  const url = 'https://grupoa.com.br/lti?param=1&param=2';
+  const url = 'https://grupoa.com.br/lti?param=1';
   const consumerKey = 'test';
   const secretKey = '@@123@@';
   
   const signature = launchV1.buildSignature(url, launchData, consumerKey, secretKey);
 
   it('Should return correct signature', () => {
-    chai.assert.equal(signature, 'HrG7xVZ7Dp2FNw0+MDEVqSuDlh8=');
+    chai.assert.equal(signature, 'OFHCJ+DYAyhxC3/2YoYa5pgj7Fk=');
   });
 
   const launchFormData = launchV1.buildForm(url, launchData, consumerKey, secretKey);
 
   it('Should return correct signature in launch form data', () => {
-    chai.assert.equal(launchFormData.properties.oauth_signature, 'HrG7xVZ7Dp2FNw0+MDEVqSuDlh8=');
+    chai.assert.equal(launchFormData.properties.oauth_signature, 'OFHCJ+DYAyhxC3/2YoYa5pgj7Fk=');
   });
 
   it('Should return correct url in launch form data', () => {
