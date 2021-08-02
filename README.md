@@ -157,14 +157,14 @@ It's a function used to check if the oauth_signature field of the LTI protocol i
 
 Example:
 ``` javascript
-    const { outcomeServiceV1 } = require('lti-node');
+    const { outcomeV1 } = require('lti-node');
 
     const url = 'https://grupoa.com.br.outcome';
     const header = 'oauth_consumer_key=12345678, oauth_signature_method=HMAC-SHA1,oauth_timestamp=1627929009,oauth_nonce=d7d5d9a6278815d1c09f4e558b9a8272,oauth_version=1.0,oauth_signature=iHwxH4busDQpEAru0eWwwa2Mmdg%3D';
     const consumerKey = '12345678';
     const secretKey = 'secret';
   
-    const signature = outcomeServiceV1.checkSignature(url, header, body, secretKey);
+    const signature = outcomeV1.checkSignature(url, header, body, secretKey);
 ```
 Return:
 ``` javascript
