@@ -13,24 +13,54 @@ describe('Check Outcome LTI 1.1 Signature', () => {
   const readRequestSignature = outcomeV1.checkSignature(url, header, readRequestBody, secretKey);
   const deleteRequestSignature = outcomeV1.checkSignature(url, header, deleteRequestBody, secretKey);
 
+  const readResult = outcomeV1.buildResponse({
+    requestType : 'read',
+    status      : 'success',
+    resultScore : '0.9'
+  });
+
+  const replaceResultError = outcomeV1.buildResponse({
+    requestType : 'replace',
+    status      : 'failure',
+    message     : 'Result score must be in 0.0 - 1.0 range'
+  });
+
+  const replaceResultSuccess = outcomeV1.buildResponse({
+    requestType : 'replace',
+    status      : 'success',
+    resultScore : '0.9'
+  });
+
+  const deleteResult = outcomeV1.buildResponse({
+    requestType : 'delete',
+    status      : 'success'
+  });
+
   it('Authorization signature and generated signature hash should be equal', () => {
     chai.assert.isNotNull(replaceRequestSignature);
     chai.assert.isNotNull(readRequestSignature);
     chai.assert.isNotNull(deleteRequestSignature);
   });
 
-  it('Should return score', () => {
+  it('Replace request should return score', () => {
     chai.assert.equal(replaceRequestSignature.resultScore, '10');
   });
 
-  it('Should not return score', () => {
+  it('Read and delete requests should not return score', () => {
     chai.assert.isUndefined(readRequestSignature.resultScore);
     chai.assert.isUndefined(deleteRequestSignature.resultScore);
   });
   
-  it('Should return sourcedId', () => {
+  it('Requests should return sourcedId', () => {
     chai.assert.equal(replaceRequestSignature.sourcedId, 'abc');
     chai.assert.equal(readRequestSignature.sourcedId, 'abc');
     chai.assert.equal(deleteRequestSignature.sourcedId, 'abc');
+  });
+
+  it('Result responses should return XML', () => {
+    chai.assert.isString(readResult);
+    chai.assert.isString(replaceResultError);
+    chai.assert.isString(replaceResultSuccess);
+    chai.assert.isString(deleteResult);
   });
 });

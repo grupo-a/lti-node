@@ -22,6 +22,7 @@
       * [Build Launch Form Data](#build_form_data)
    * [Outcome Service LTI 1.1](#outcome_service_lti_v1)
       * [Check signature](#check_signature)
+      * [Build response](#build_response)
    * [Status](#status)
 <!--te-->
 
@@ -161,7 +162,7 @@ Example:
 
     const url = 'https://grupoa.com.br.outcome';
     const header = 'oauth_consumer_key=12345678, oauth_signature_method=HMAC-SHA1,oauth_timestamp=1627929009,oauth_nonce=d7d5d9a6278815d1c09f4e558b9a8272,oauth_version=1.0,oauth_signature=iHwxH4busDQpEAru0eWwwa2Mmdg%3D';
-    const consumerKey = '12345678';
+    const body = '<?xml version = 1.0 encoding = UTF-8?>  <imsx_POXEnvelopeRequest xmlns = http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0>      <imsx_POXHeader>      <imsx_POXRequestHeaderInfo>        <imsx_version>V1.0</imsx_version>        <imsx_messageIdentifier>test</imsx_messageIdentifier>      </imsx_POXRequestHeaderInfo>    </imsx_POXHeader>    <imsx_POXBody>      <replaceResultRequest>        <resultRecord>          <sourcedGUID>            <sourcedId>abc</sourcedId>          </sourcedGUID>          <result>            <resultScore>                <language>en</language>                <textString>10</textString>            </resultScore>          </result>        </resultRecord>      </replaceResultRequest>    </imsx_POXBody>  </imsx_POXEnvelopeRequest>';
     const secretKey = 'secret';
   
     const signature = outcomeV1.checkSignature(url, header, body, secretKey);
@@ -172,6 +173,52 @@ Return:
         resultScore: '10', 
         sourcedId: 'abc' 
     }
+```
+<br>
+
+<a name="build_response"/>
+
+### Build response
+It's a function used to build an result response according to the type of request (read, replace, delete).
+
+Example:
+``` javascript
+    const { outcomeV1 } = require('lti-node');
+
+    const readResult = outcomeV1.buildResponse({
+        requestType : 'read',
+        status      : 'success',
+        resultScore : '0.9'
+    });
+```
+Return:
+``` xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <imsx_POXEnvelopeResponse xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXHeader>
+      <imsx_POXResponseHeaderInfo>
+        <imsx_version>V1.0</imsx_version>
+        <imsx_messageIdentifier>162810903930706</imsx_messageIdentifier>
+        <imsx_statusInfo>
+          <imsx_codeMajor>success</imsx_codeMajor>
+          <imsx_severity>status</imsx_severity>
+          <imsx_description>Result read</imsx_description>
+          <imsx_messageRefIdentifier>162810903930707</imsx_messageRefIdentifier>
+          <imsx_operationRefIdentifier>readResult</imsx_operationRefIdentifier>
+        </imsx_statusInfo>
+      </imsx_POXResponseHeaderInfo>
+    </imsx_POXHeader>
+    <imsx_POXBody>
+      <readResultResponse>
+        <result>
+          <resultScore>
+            <language>en</language>
+            <textString>0.9</textString>
+          </resultScore>
+        </result>
+      </readResultResponse>
+    </imsx_POXBody>
+    </imsx_POXEnvelopeResponse>
 ```
 <br>
 <a name="status"/>
