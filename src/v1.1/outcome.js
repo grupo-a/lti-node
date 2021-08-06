@@ -2,19 +2,13 @@ const oauth = require('oauth-sign');
 const outcomeDataHelper = require('./helper/outcomeData');
 const result = require('./helper/resultResponse');
 
-const checkSignature = (url, header, body, secretKey) => {
+const checkIsSignatureValid = (url, header, secretKey) => {
   const method = 'POST';
-  const outcomeData = outcomeDataHelper.getOutcomeData(header, body);
+  const outcomeData = outcomeDataHelper.getOutcomeData(header);
 
   const signature = oauth.hmacsign(method, url, outcomeData.params, secretKey);
 
-  if (outcomeData.signature === signature ) {
-    return outcomeData.requestType === 'replace' 
-      ? { requestType: outcomeData.requestType, resultScore: outcomeData.resultScore, sourcedId: outcomeData.sourcedId }
-      : { requestType: outcomeData.requestType, sourcedId: outcomeData.sourcedId };
-  } else {
-    return null;
-  }
+  return outcomeData.signature === signature ? true : false;
 };
 
 const buildResponse = ({ requestType, status, message = null, resultScore = null }) => {
@@ -35,6 +29,6 @@ const buildResponse = ({ requestType, status, message = null, resultScore = null
 };
 
 module.exports  = {
-  checkSignature,
+  checkIsSignatureValid,
   buildResponse
 };

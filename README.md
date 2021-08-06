@@ -21,7 +21,7 @@
       * [Build Signature](#build_signature)
       * [Build Launch Form Data](#build_form_data)
    * [Outcome Service LTI 1.1](#outcome_service_lti_v1)
-      * [Check signature](#check_signature)
+      * [Check valid signature](#check_signature)
       * [Build response](#build_response)
    * [Status](#status)
 <!--te-->
@@ -153,7 +153,7 @@ The Outcome Service LTI is implemented following the specification: https://www.
 
 <a name="check_signature"/>
 
-### Check Signature
+### Check Valid Signature
 It's a function used to check if the oauth_signature field of the LTI protocol is valid.
 
 Example:
@@ -162,17 +162,13 @@ Example:
 
     const url = 'https://grupoa.com.br.outcome';
     const header = 'oauth_consumer_key=12345678, oauth_signature_method=HMAC-SHA1,oauth_timestamp=1627929009,oauth_nonce=d7d5d9a6278815d1c09f4e558b9a8272,oauth_version=1.0,oauth_signature=iHwxH4busDQpEAru0eWwwa2Mmdg%3D';
-    const body = '<?xml version = 1.0 encoding = UTF-8?>  <imsx_POXEnvelopeRequest xmlns = http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0>      <imsx_POXHeader>      <imsx_POXRequestHeaderInfo>        <imsx_version>V1.0</imsx_version>        <imsx_messageIdentifier>test</imsx_messageIdentifier>      </imsx_POXRequestHeaderInfo>    </imsx_POXHeader>    <imsx_POXBody>      <replaceResultRequest>        <resultRecord>          <sourcedGUID>            <sourcedId>abc</sourcedId>          </sourcedGUID>          <result>            <resultScore>                <language>en</language>                <textString>10</textString>            </resultScore>          </result>        </resultRecord>      </replaceResultRequest>    </imsx_POXBody>  </imsx_POXEnvelopeRequest>';
     const secretKey = 'secret';
   
-    const signature = outcomeV1.checkSignature(url, header, body, secretKey);
+    const signature = outcomeV1.checkIsSignatureValid(url, body, secretKey);
 ```
 Return:
 ``` javascript
-    { 
-        resultScore: '10', 
-        sourcedId: 'abc' 
-    }
+  true
 ```
 <br>
 

@@ -1,4 +1,4 @@
-const getOutcomeData = (header, body) => {
+const getOutcomeData = (header) => {
   const paramsList = header.replace(/\*\s|,\s|,/g, '\n');
 
   let consumerKey = /(oauth_consumer_key)=([^\s]+)/g.exec(paramsList);
@@ -25,19 +25,6 @@ const getOutcomeData = (header, body) => {
   let signature = /(oauth_signature)=([^\s]+)/g.exec(paramsList);
   signature = signature && decodeURIComponent(signature[2]);
 
-  let sourcedId = body.split('<sourcedId>')[1];
-  sourcedId = sourcedId && sourcedId.slice(0, sourcedId.indexOf('</sourcedId>'));
-  sourcedId = sourcedId && decodeURIComponent(sourcedId); 
-
-  let resultScore = body.split('<resultScore>')[1];
-  resultScore = resultScore && resultScore.split('<textString>')[1];
-  resultScore = resultScore && resultScore.slice(0, resultScore.indexOf('</textString>'));
-  resultScore = resultScore && decodeURIComponent(resultScore);
-
-  let requestType = body.split('<imsx_POXBody>')[1];
-  requestType = requestType && requestType.split('<')[1];
-  requestType = requestType && requestType.slice(0, requestType.indexOf('ResultRequest>'));
-
   const params = {
     oauth_consumer_key     : consumerKey,
     oauth_signature_method : signatureMethod,
@@ -54,7 +41,7 @@ const getOutcomeData = (header, body) => {
     params.oauth_callback = callback;
   }
 
-  return { params, resultScore, sourcedId, consumerKey, signature, requestType };
+  return { params, consumerKey, signature };
 };
 
 module.exports = {
